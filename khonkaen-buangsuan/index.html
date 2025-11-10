@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>รำบวงสรวงเมืองขอนแก่น 2568</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-purple: #7e57c2;
+      --color-gold: #d4af37;
+      --color-earth: #8b6d47;
+      --color-beige: #f8f4f0;
+      --color-white: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Kanit', sans-serif;
+      background-color: var(--color-beige);
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Popup Modal */
+    .modal {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7); /* พื้นหลังมืด */
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      max-width: 550px;
+      width: 90%;
+    }
+
+    .modal-content img {
+      width: 500px;
+      height: 500px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-btn {
+      background-color: var(--color-purple);
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      font-family: 'Kanit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .modal-btn:hover {
+      background-color: #6a4aad;
+    }
+
+    /* Hero และส่วนอื่น ๆ (เหมือนเดิม) */
+    .hero {
+      height: 100vh;
+      background: 
+        linear-gradient(rgba(126, 87, 194, 0.7), rgba(126, 87, 194, 0.85)),
+        url('https://img5.pic.in.th/file/secure-sv1/484053069_1314189550062777_376008848388543753_n-1.jpg') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 1.5rem;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.2);
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      color: var(--color-white);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      z-index: 1;
+    }
+
+    .subtitle {
+      font-size: 1.8rem;
+      color: var(--color-gold);
+      margin-bottom: 1rem;
+      z-index: 1;
+    }
+
+    .location {
+      font-size: 1.2rem;
+      color: var(--color-white);
+      max-width: 700px;
+      margin-bottom: 2rem;
+      z-index: 1;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .btn, .btn-outline {
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn {
+      background-color: var(--color-white);
+      color: var(--color-purple);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .btn-outline {
+      border: 2px solid var(--color-white);
+      color: white;
+      background: transparent;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.15);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .intro {
+      text-align: center;
+      padding: 4rem 0;
+    }
+
+    .intro h2 {
+      font-size: 2.2rem;
+      color: var(--color-purple);
+      margin-bottom: 1.5rem;
+    }
+
+    footer {
+      background: var(--color-earth);
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(248, 244, 240, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 1000;
+      padding: 0.8rem 0;
+    }
+
+    .navbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--color-purple);
+      text-decoration: none;
+    }
+
+    .navbar ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: var(--color-earth);
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .navbar a:hover {
+      color: var(--color-purple);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.4rem; }
+      .subtitle { font-size: 1.4rem; }
+      .btn { padding: 0.7rem 1.5rem; font-size: 1rem; }
+      .navbar ul { display: none; }
+
+      .modal-content img {
+        width: 100%;
+        height: auto;
+        max-height: 70vh;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Popup Modal -->
+  <div class="modal" id="welcomeModal">
+    <div class="modal-content">
+      <!-- แทนที่ด้วยลิงก์รูปจริงของคุณ (ขนาด ~500x500) -->
+      <img src="https://img5.pic.in.th/file/secure-sv1/42575e84f407438719a1683689cf01dd.png" alt="รูปประกาศ">
+      <p> เกี่ยวกับพิธีรำบวงสรวงเมืองขอนแก่น ใบกิจกรรมสำหรับวิทยาลัยอาชีวศึกษาขอนแก่น</p>
+      <button class="modal-btn" onclick="document.getElementById('welcomeModal').style.display='none'">
+        รับทราบ
+      </button>
+    </div>
+  </div>
+
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">รำบวงสรวง ขอนแก่น</a>
+      <ul>
+        <li><a href="index.html">หน้าหลัก</a></li>
+        <li><a href="significance.html">ความสำคัญ</a></li>
+        <li><a href="rehearsal.html">Khon Kaen History</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <h1>รำบวงสรวงเมืองขอนแก่น</h1>
+    <p class="subtitle">ครั้งที่ 228 • พุธที่ 28 พฤศจิกายน 2568</p>
+    <p class="location">ศาลหลักเมืองขอนแก่น • โดยอาชีวศึกษาขอนแก่น</p>    
+    <div class="btn-group">
+      <a href="significance.html" class="btn">ความสำคัญของพิธี</a>
+      <a href="rehearsal.html" class="btn-outline">ประวัติจังหวัดขอนแก่น</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <h2>รำหนึ่งท่า... คือจิตวิญญาณของขอนแก่น</h2>
+      <p>พิธีรำบวงสรวงเป็นมรดกทางวัฒนธรรมที่สืบทอดมากว่า 228 ปี แสดงความเคารพต่อเจ้าพ่อหลักเมือง และสิ่งศักดิ์สิทธิ์ผู้คุ้มครองบ้านเมือง</p>
+    </section>
+  </main>
+<script type="module">
+  // Import SDKs
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getDatabase, ref, get, set, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+
+  // 🔹 Config ของคุณ (อันที่ให้มา)
+  const firebaseConfig = {
+    apiKey: "AIzaSyDjhdvdLFUtqhZgqg704E8m0Mv2YSapXHk",
+    authDomain: "websitekhonkaenhistory.firebaseapp.com",
+    projectId: "websitekhonkaenhistory",
+    storageBucket: "websitekhonkaenhistory.firebasestorage.app",
+    messagingSenderId: "795263864295",
+    appId: "1:795263864295:web:c4bc61567ab4211f910142",
+    measurementId: "G-LKJKG4CH89",
+    databaseURL: "https://websitekhonkaenhistory-default-rtdb.firebaseio.com/"  // 👈 ต้องมีบรรทัดนี้ด้วย
+  };
+
+  // 🔹 เริ่มต้น Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getDatabase(app);
+
+  // 🔹 อ้างอิง path สำหรับเก็บจำนวนผู้เข้าชม
+  const viewRef = ref(db, "view_count");
+
+  // ฟังก์ชันเพิ่มจำนวนผู้เข้าชม
+  get(viewRef).then(snapshot => {
+    if (snapshot.exists()) {
+      const count = snapshot.val() + 1;
+      set(viewRef, count);
+    } else {
+      set(viewRef, 1);
+    }
+  });
+
+  // 🔹 อัปเดตจำนวนแบบเรียลไทม์
+  onValue(viewRef, snapshot => {
+    const count = snapshot.val();
+    document.getElementById("viewCount").innerText = count.toLocaleString();
+  });
+</script>
+
+<!-- จุดแสดงจำนวนผู้เข้าชม -->
+<div style="text-align:center; margin:20px; color:#7e57c2; font-weight:600;">
+   ผู้เข้าชมทั้งหมด: <b id="viewCount">กำลังโหลด...</b> คน
+</div>
+
+  <footer>
+    <p>© 2568 Design Computer programmer km.68/1 • โดยอาชีวศึกษาขอนแก่น</p>
+  </footer>
+<!-- Firebase -->
+<!-- Firebase Visitor Counter -->
+
+
+</body>
+</html>
